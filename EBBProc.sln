@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBBProc", "EBBProc\EBBProc.csproj", "{D08EBF50-775C-4AE0-B791-BCE37851622F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBBProc.Tests", "EBBProc.Tests\EBBProc.Tests.csproj", "{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D08EBF50-775C-4AE0-B791-BCE37851622F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D08EBF50-775C-4AE0-B791-BCE37851622F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D08EBF50-775C-4AE0-B791-BCE37851622F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D08EBF50-775C-4AE0-B791-BCE37851622F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A4BBBBB-AD4A-4E35-BBD9-2F378EEBDB23}
+	EndGlobalSection
+EndGlobal
