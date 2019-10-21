@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport" />
+
+    <!-- Site Properities -->
+    <meta name="generator" content="Visual Studio 2015" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="description" content="Stagb Admin Template" />
+    <meta name="keywords" content="html5, ,semantic,ui, library, framework, javascript,jquery,template,blog,stagb,template" />
+    <link href="~/Content/theme/stagb/dist/semantic.min.css" rel="stylesheet" />
+    <link href="~/Content/theme/stagb/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="ui container" style="padding-top:10%">
+        <div class="ui grid center aligned">
+            <div class="row">
+                <div class="sixteen wide tablet six wide computer column">
+                    <div class="ui left aligned segment">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/theme/stagb/js/jquery-2.1.4.min.js"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        var colors = ["#F25F5C", "#247BA0", "#8e44ad", "#ED6A5A", "#32936F", "#2c3e50", "#E83F6F", "#32936F", "#2E294E"];
+        var rand = Math.floor(Math.random() * colors.length);
+        $('body').css("background-color", colors[rand]);
+    </script>
+</body>
+</html>

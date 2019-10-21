@@ -4,8 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBBProc", "EBBProc\EBBProc.csproj", "{D08EBF50-775C-4AE0-B791-BCE37851622F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DCA3B0CB-A2E4-4550-8120-C3708A1DA19D} = {DCA3B0CB-A2E4-4550-8120-C3708A1DA19D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBBProc.Tests", "EBBProc.Tests\EBBProc.Tests.csproj", "{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{DCA3B0CB-A2E4-4550-8120-C3708A1DA19D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2015120-2BA5-4746-AAAF-9A53D36F1F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA3B0CB-A2E4-4550-8120-C3708A1DA19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA3B0CB-A2E4-4550-8120-C3708A1DA19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA3B0CB-A2E4-4550-8120-C3708A1DA19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA3B0CB-A2E4-4550-8120-C3708A1DA19D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,27 +3,73 @@
     ViewBag.Title = "Phone Number";
 }
 
-<h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Add a phone number</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Number, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Number, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Submit" />
+@section breadcrumps{
+    <div class="row">
+        <div class="column">
+            <div class="ui breadcrumb">
+                <a class="section" href="/">Home</a>
+                <i class="right angle icon divider"></i>
+                <div class="section">Settings</div>
+                <i class="right angle icon divider"></i>
+                <div class="active section">Phone Number</div>
+            </div>
         </div>
     </div>
 }
 
+
+<div class="sixteen wide tablet two wide computer column">
+    <div class="ui vertical secondary pointing fluid tabular menu">
+        <a class="item" href="@Url.Action("index", "profile", new { area = "me"})">
+            Profile
+        </a>
+        <a class="item" href="@Url.Action("changepassword", "manage", new { area = ""})">
+            Change password
+        </a>
+        <a class="item active" data-tab="phone-number">
+            Phone number
+        </a>
+    </div>
+</div>
+
+
+<div class="sixteen wide tablet fourteen wide computer column">
+    <div class="ui segment">
+        <div class="ui tab active" data-tab="phone-number">
+            @using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "ui form form1 segment", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3 class="ui header">
+                    Add a phone number
+                </h3>
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="ui hidden divider"></div>
+                <div class="field">
+                    @Html.LabelFor(m => m.Number)
+                    @Html.TextBoxFor(m => m.Number)
+                </div>
+                <div class="ui blue submit button">
+                    <i class="save icon"></i>
+                    Update
+                </div>
+                <div class="ui error message"></div>
+            }
+
+        </div>
+    </div>
+</div>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('.ui.form1').form({
+            fields: {
+                number: {
+                    identifier: 'Number',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter number'
+                    }]
+                }
+            }
+        });
+    </script>
 }

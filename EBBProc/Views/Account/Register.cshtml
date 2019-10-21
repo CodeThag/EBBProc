@@ -1,38 +1,44 @@
 ﻿@model EBBProc.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Create an account";
+    Layout = "~/Views/Shared/_StagbAccessControlLayout.cshtml";
 }
-
-<h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h1 class="ui header center aligned">
+        <img src="~/Content/theme/stagb/img/logo.png" alt="stagblogo" class="ui image">
+        <div class="content">
+        </div>
+    </h1>
+    <h4>@ViewBag.Title.</h4>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    <div class="field">
+        @Html.LabelFor(m => m.Email)
+        <div class="ui fluid icon input">
+            @Html.TextBoxFor(m => m.Email, new { @style = "width:100%!important;min-width:100%;width:100%;" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    <div class="field">
+        @Html.LabelFor(m => m.Password)
+        <div class="ui fluid icon input">
+            @Html.PasswordFor(m => m.Password, new { @style = "width:100%!important;min-width:100%;width:100%;" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+    <div class="field">
+        @Html.LabelFor(m => m.ConfirmPassword)
+        <div class="ui fluid icon input">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @style = "width:100%!important;min-width:100%;width:100%;" })
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
+    <div class="field">
+        <input type="submit" class="ui teal right labeled icon button fluid" value="Register" />
+        <a class="ui blue right labeled icon button fluid" href="@Url.Action("Login")">
+            Sign In
+            <i class="icon step backward"></i>
+        </a>
     </div>
 }
 

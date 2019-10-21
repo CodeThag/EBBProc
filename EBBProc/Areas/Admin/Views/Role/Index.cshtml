@@ -1,0 +1,67 @@
+﻿@model EBBProc.Areas.Admin.Models.RoleViewModel
+@{
+    ViewBag.Title = "System Roles";
+}
+
+@section breadcrumps{
+    <div class="ui breadcrumb">
+        <a class="section" href="/">Home</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">My companies</div>
+    </div>
+}
+<div class="row">
+    <div class="sixteen wide mobile sixteen wide tablet ten wide computer column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <h5 class="ui header">
+                    System Roles
+                </h5>
+            </div>
+            <div class="ui segment">
+                <a href="#" class="ui small blue button">Add Role</a>
+                <table class="ui celled table striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Role</th>
+                            <th>No of Users</th>
+                            <th><i class="icon setting"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Roles.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var r in Model.Roles)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@r.Name</td>
+                                    <td>@r.Users.Count()</td>
+                                    <td>
+                                        <a href="#" class="ui orange circular icon button">
+                                            <i class="icon edit"></i>
+                                        </a>
+                                        <a href="#" class="ui red circular icon button">
+                                            <i class="icon trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="99">No record found!</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

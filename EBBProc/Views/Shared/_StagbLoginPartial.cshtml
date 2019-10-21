@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNet.Identity
+
+<div class="ui dropdown item">
+    <img class="ui mini circular image" src="~/Content/theme/stagb/img/avatar/people/enid.png" alt="label-image" />
+    <div class="menu">
+        <a class="item" href="#">Inbox</a>
+        <a class="item" href="@Url.Action("index", "profile", new { area = "Me"})">Profile</a>
+        <a class="item" href="@Url.Action("changepassword", "manage", new { area = ""})">Settings</a>
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="ui divider"></div>
+                <a class="item" style="text-align:left">Need Help?</a>
+                <a class="item" style="text-align:left" href="javascript:document.getElementById('logoutForm').submit()">Sign Out</a>
+
+            }
+        }
+    </div>
+</div>

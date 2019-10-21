@@ -1,0 +1,402 @@
+﻿@model EBBProc.Areas.Me.Models.OrganisationViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+@section breadcrumps{
+    <div class="row">
+        <div class="column">
+            <div class="ui breadcrumb">
+                <a class="section" href="/">Home</a>
+                <i class="right angle icon divider"></i>
+                <a class="section" href="@Url.Action("index", "Organisation", new { area = "Me"})">My companies</a>
+                <i class="right angle icon divider"></i>
+                <div class="active section">@Model.Row.Name</div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <button class="ui active button">
+                    <i class="user icon"></i>
+                    Active Button
+                </button>
+                <button class="ui disabled button">
+                    <i class="user icon"></i>
+                    Disable Button
+                </button>
+                <button class="ui loading button">Loading</button>
+                <button class="ui basic loading button">Loading</button>
+                <button class="ui primary loading button">Loading</button>
+                <button class="ui secondary loading button">Loading</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="eight wide column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <h3 class="ui header">Corporate Information</h3>
+            </div>
+            <div class="ui segment">
+                <dl>
+                    <dt>Status</dt>
+                    <dd>@Model.Row.OrganisationStatu.Name </dd>
+                    <dt>Company Name</dt>
+                    <dd>@Model.Row.Name</dd>
+                    <dt>Corp. Registrar</dt>
+                    <dd>@Model.Row.CorporateRegistrar.Name </dd>
+                    <dt>RC Number</dt>
+                    <dd>@Model.Row.RCNumber</dd>
+                    <dt>TIN</dt>
+                    <dd>@Model.Row.TIN</dd>
+                    <dt>Registration Year</dt>
+                    <dd>@Model.Row.RegistrationYear</dd>
+                    <dt>Address</dt>
+                    <dd>@Model.Row.Addresses.FirstOrDefault().Street </dd>
+                    <dt>LGA</dt>
+                    <dd>@Model.Row.Addresses.FirstOrDefault().LGA.Name </dd>
+                    <dt>State</dt>
+                    <dd>@Model.Row.Addresses.FirstOrDefault().LGA.State.Name </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="ui segments">
+            <div class="ui segment no-padding">
+                <div class="ui menu no-radius borderless inverted blueli stackable">
+                    <div class="header item">
+                        Director(s)
+                    </div>
+                    <div class="right menu">
+                        <a class="item" id="">
+                            <i class="plus icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="eight wide column">
+        <div class="ui segments">
+            <div class="ui segment no-padding">
+                <div class="ui menu no-radius borderless inverted blueli stackable">
+                    <div class="header item">
+                        Corporate Documents
+                    </div>
+                    <div class="right menu">
+                        <a class="item" id="modal-document-add">
+                            <i class="plus icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
+                <table class="ui table celled">
+                    <thead>
+                        <tr>
+                            <th width="40px">#</th>
+                            <th>Name</th>
+                            <th width="100px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Row.Documents.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var d in Model.Row.Documents.ToList())
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@d.DocumentType.Name</td>
+                                    <td>
+                                        <a href="@Url.Action(" download", new { Id=d.Id})" class="circular ui green icon button">
+                                            <i class="download icon"></i>
+                                        </a>
+                                        <a href="@Url.Action(" removedocument", new { id=d.Id, organisationId=Model.Row.Id })"
+                                           class="circular ui redli icon button">
+                                            <i class="trash icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="99">No document uploaded!</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="ui segments">
+            <div class="ui segment no-padding">
+                <div class="ui menu no-radius borderless inverted darkorangeli stackable">
+                    <div class="header item">
+                        Tenders
+                    </div>
+                    <div class="right menu">
+                        <a class="item" id="">
+                            <i class="plus icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
+                <h3>Module not available</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+@**
+    Modal to upload documents
+*@
+<div id="modal-document-form" class="ui small test modal">
+    <div class="header">
+        Delete Your Account
+    </div>
+    <div class="content">
+        @using (Html.BeginForm("AddDocument", "Organisation", null, FormMethod.Post, new { @class = "ui form form1", role = "form", id = "organisation-document-form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationDocumentForm.DocumentType)
+                    @Html.DropDownListFor(x => x.OrganisationDocumentForm.DocumentType, Model.DocumentTypes, "Select...", new { @class = "ui dropdown selection large" })
+
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationDocumentForm.File)
+                    <div class="ui icon input">
+                        @Html.TextBoxFor(x => x.OrganisationDocumentForm.File, new { @type = "file", @class = "" })
+                        <i class="attach icon"></i>
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.OrganisationDocumentForm.OrganisationId)
+            <div class="ui blue submit button">Submit</div>
+            <div class="ui error message"></div>
+        }
+    </div>
+</div>
+
+
+<!-- Modal forms -->
+<div class="ui standard test modal" id="modal-organisation-form">
+    <div class="header">
+        Edit Company Details
+    </div>
+    <div class="content">
+        @using (Html.BeginForm("Create", "Organisation", null, FormMethod.Post, new { @class = "ui form form1", role = "form", id = "organisation-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.OrganisationForm.Id)
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.Name)
+                    @Html.TextBoxFor(x => x.OrganisationForm.Name, new { })
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.RegistrarId)
+                    @Html.DropDownListFor(x => x.OrganisationForm.RegistrarId, Model.Registrars, "Select...", new { @class = "ui dropdown selection" })
+
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.TIN)
+                    @Html.TextBoxFor(x => x.OrganisationForm.TIN)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.RCNumber)
+                    @Html.TextBoxFor(x => x.OrganisationForm.RCNumber)
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.Website)
+                    @Html.TextBoxFor(x => x.OrganisationForm.Website)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.RegistrationYear)
+                    @Html.TextBoxFor(x => x.OrganisationForm.RegistrationYear)
+                </div>
+            </div>
+            <div class="field">
+                @Html.LabelFor(x => x.OrganisationForm.AddressForm.Street)
+                @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.Street)
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.StateId)
+                    @Html.DropDownListFor(x => x.OrganisationForm.AddressForm.StateId, Model.States, "Select...")
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.LGAId)
+                    @Html.DropDownListFor(x => x.OrganisationForm.AddressForm.LGAId, Model.LGAs, "Select...")
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.Email)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.Email)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.PhoneNumber)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.PhoneNumber)
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.PostalCode)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.PostalCode)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.AltPhoneNumber)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.AltPhoneNumber)
+                </div>
+            </div>
+            <div class="inline field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="terms">
+                    <label>I agree to the terms and conditions</label>
+                </div>
+            </div>
+            <div class="ui blue submit button">Submit</div>
+            <div class="ui error message"></div>
+        }
+    </div>
+</div>
+<!-- /.Modal forms -->
+
+@section Scripts{
+    <script>
+
+        $("#modal-document-form")
+            .modal({
+                blurring: true,
+                inverted: false
+            })
+            .modal("attach events", "#modal-document-add", "show");
+
+
+        $('.ui.form1').form({
+            fields: {
+                documentType: {
+                    identifier: 'OrganisationDocumentForm_DocumentType',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select document type'
+                    }]
+                },
+                file: {
+                    identifier: 'OrganisationDocumentForm_File',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a file'
+                    }]
+                },
+            }
+        });
+
+        
+        $('#organisation-form').form({
+            fields: {
+                name: {
+                    identifier: 'OrganisationForm_Name',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter company name'
+                    }]
+                },
+                registrar: {
+                    identifier: 'OrganisationForm_RegistrarId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a registrar'
+                    }]
+                },
+                TIN: {
+                    identifier: 'OrganisationForm_TIN',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter Tax Identification Number'
+                    }, {
+                        type: 'minLength[11]',
+                        prompt: 'Your TIN must be at least {ruleValue} characters'
+                    }]
+                },
+                RCNumber: {
+                    identifier: 'OrganisationForm_RCNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter a password'
+                    }]
+                },
+                registrationYear: {
+                    identifier: 'OrganisationForm_RegistrationYear',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter a registration year'
+                    }, {
+                        type: 'minLength[4]',
+                        prompt: 'Your registration year must be at least {ruleValue} characters'
+                    }]
+                },
+                street: {
+                    identifier: 'OrganisationForm_AddressForm_Street',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter street details'
+                    }]
+                },
+                state: {
+                    identifier: 'OrganisationForm_AddressForm_StateId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a state'
+                    }]
+                },
+                lga: {
+                    identifier: 'OrganisationForm_AddressForm_LGAId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a Local Govt. Area'
+                    }]
+                },
+                phonenumber: {
+                    identifier: 'OrganisationForm_AddressForm_PhoneNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter a valid phone number'
+                    }]
+                },
+                terms: {
+                    identifier: 'terms',
+                    rules: [{
+                        type: 'checked',
+                        prompt: 'You must agree to the terms and conditions'
+                    }]
+                }
+            }
+        });
+    </script>
+}

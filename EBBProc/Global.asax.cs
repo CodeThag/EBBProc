@@ -1,3 +1,6 @@
+using Autofac;
+using Autofac.Configuration;
+using Autofac.Integration.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,19 @@ namespace EBBProc
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Start Invertion here
+            //SetUpInvertionControl();
+        }
+
+        private void SetUpInvertionControl()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterSource(new ViewRegistrationSource());
+            //builder.RegisterType()
+            var container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
 }

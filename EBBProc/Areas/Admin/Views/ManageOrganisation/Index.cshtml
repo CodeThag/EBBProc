@@ -1,0 +1,99 @@
+﻿@model EBBProc.Areas.Admin.Models.MOrganisationViewModel
+@{
+    ViewBag.Title = "Manage Organisation";
+}
+
+@section breadcrumps{
+    <div class="row">
+        <div class="column">
+            <div class="ui breadcrumb">
+                <a class="section" href="/">Home</a>
+                <i class="right angle icon divider"></i>
+                <div class="active section">Manage Organisations</div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="sixteen wide column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <h5 class="ui header">
+                    List of companies
+                </h5>
+            </div>
+            <div class="ui segment">
+                <table id="data_table" class="ui compact selectable striped celled table tablet stackable" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Reg. Number</th>
+                            <th>TIN</th>
+                            <th>Reg. Year</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var o in Model.Organisations.ToList())
+                        {
+                            <tr>
+                                <td>@o.Name</td>
+                                <td>@o.RCNumber</td>
+                                <td>@o.TIN</td>
+                                <td>@o.RegistrationYear</td>
+                                @if (o.OrganisationStatu.Name.Contains("Pending"))
+                                {
+                                    <td>@o.OrganisationStatu.Name</td>
+                                }
+                                else
+                                {
+                                    if (o.OrganisationStatu.Name.Equals("Verified"))
+                                    {
+                                        <td class="positive">@o.OrganisationStatu.Name</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="error">@o.OrganisationStatu.Name</td>
+                                    }
+                                }
+                                <td>
+                                    <a href="@Url.Action("details", new { Id = o.Id})" class="circular ui green icon button" tooltip="view details">
+                                        <i class="eye icon"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section styles{
+    <style>
+
+        .dataTables_filter input {
+            height: 2em;
+        }
+    </style>
+}
+@section scripts{
+    @Scripts.Render("~/Content/theme/stagb/plugins/datatable/jquery.dataTables.js")
+    @Scripts.Render("~/Content/theme/stagb/js/customjs/custom-datatable.js")
+    @*<script>
+            $(document).ready(function () {
+                var dtable = $('data_table').DataTable({
+                    "pagingType": "full_numbers_icon",
+                    order: [1, 'desc'],
+                    responsive: true
+                });
+                $('select[name="data_table_length"]').change(function () {
+                    $("body")
+                        .getNiceScroll()
+                        .remove();
+                });
+            });
+        </script>*@
+}

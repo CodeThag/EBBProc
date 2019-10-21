@@ -3,6 +3,22 @@
     ViewBag.Title = "Verify Phone Number";
 }
 
+
+
+@section breadcrumps{
+    <div class="row">
+        <div class="column">
+            <div class="ui breadcrumb">
+                <a class="section" href="/">Home</a>
+                <i class="right angle icon divider"></i>
+                <div class="section">settings</div>
+                <i class="right angle icon divider"></i>
+                <div class="active section">change password</div>
+            </div>
+        </div>
+    </div>
+}
+
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("VerifyPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

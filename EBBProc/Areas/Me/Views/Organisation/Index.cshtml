@@ -1,0 +1,344 @@
+﻿@model EBBProc.Areas.Me.Models.OrganisationViewModel
+@{
+    ViewBag.Title = "My Organisations";
+}
+
+@section breadcrumps{
+    <div class="ui breadcrumb">
+        <a class="section" href="/">Home</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">My companies</div>
+    </div>
+}
+
+<div class="row">
+    <div class="column">
+        <div class="ui segments">
+            <div class="ui segment no-padding borderless">
+                <div class="ui menu">
+                    <div class="header item">My Companies</div>
+                    <div class="right menu">
+                        <a class="item" id="modal-organisation">
+                            <i class="plus red icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment basic">
+                @if (Model.Organisations.Count() > 0)
+                {
+                    <div class="ui accordion">
+                        @foreach (var o in Model.Organisations)
+                        {
+                            <div class="title">
+                                <i class="dropdown icon"></i> <strong>
+                                    @o.Name  @if (o.OrganisationStatu.Name.Equals("Verified"))
+                                    {<i class="icon check circle green"></i>}
+                                    else if (o.OrganisationStatu.Name.Equals("Rejected"))
+                                    {<i class="icon cancel sign red"></i>}
+                                    else
+                                    {<i class="icon warning sign orange"></i>}
+                                </strong>
+                            </div>
+                            <div class="content ui equal width left aligned padded grid stackable">
+                                <div class="row">
+                                    <div class="column">
+                                        <div class="ui segments">
+                                            <div class="ui segment inverted redli">
+                                                <h3 class="ui header">
+                                                    <i class="icon certificate"></i> Registration details
+                                                </h3>
+                                            </div>
+                                            <div class="ui segment">
+                                                <dl>
+                                                    <dt>Corporate Registrar</dt>
+                                                    <dd>@o.CorporateRegistrar.Name </dd>
+                                                    <dt>RC Number</dt>
+                                                    <dd>@o.RCNumber</dd>
+                                                    <dt>TIN</dt>
+                                                    <dd>@o.TIN</dd>
+                                                    <dt>Registration Year</dt>
+                                                    <dd>@o.RegistrationYear</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="ui segments">
+                                            <div class="ui segment inverted greenli">
+                                                <h3 class="ui header">
+                                                    <i class="icon marker"></i> Location
+                                                </h3>
+                                            </div>
+                                            <div class="ui segment">
+                                                <dl>
+                                                    <dt>Address</dt>
+                                                    <dd>@o.Addresses.FirstOrDefault().Street </dd>
+                                                    <dt>LGA</dt>
+                                                    <dd>@o.Addresses.FirstOrDefault().LGA.Name </dd>
+                                                    <dt>State</dt>
+                                                    <dd>@o.Addresses.FirstOrDefault().LGA.State.Name </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="ui segments">
+                                            <div class="ui segment inverted pinkli">
+                                                <h3 class="ui header">
+                                                    Documents
+                                                </h3>
+                                            </div>
+                                            <div class="ui segment">
+                                                @if (o.Documents.Count() > 0)
+                                                {
+                                                    <ol>
+                                                        @foreach (var d in o.Documents)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action(" download", new { Id=d.Id})">@d.DocumentType.Name</a>
+                                                            </li>
+                                                        }
+                                                    </ol>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="ui segments">
+                                            <div class="ui segment inverted blueli">
+                                                <h3 class="ui header">
+                                                    Header
+                                                </h3>
+                                            </div>
+                                            <div class="ui segment">
+                                                Box with Colorful Top Attached Header
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="column">
+                                        <a href="@Url.Action("details", new { id = o.Id })" class="ui button green mini">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <text>No record found!</text>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal forms -->
+<div class="ui standard test modal" id="modal-organisation-form">
+    <div class="header">
+        Add Company Details
+    </div>
+    <div class="content">
+        @using (Html.BeginForm("Create", "Organisation", null, FormMethod.Post, new { @class = "ui form form1", role = "form", id = "organisation-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.Name)
+                    @Html.TextBoxFor(x => x.OrganisationForm.Name, new { })
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.RegistrarId)
+                    @Html.DropDownListFor(x => x.OrganisationForm.RegistrarId, Model.Registrars, "Select...", new { @class = "ui dropdown selection" })
+
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.TIN)
+                    @Html.TextBoxFor(x => x.OrganisationForm.TIN)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.RCNumber)
+                    @Html.TextBoxFor(x => x.OrganisationForm.RCNumber)
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.Website)
+                    @Html.TextBoxFor(x => x.OrganisationForm.Website)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.RegistrationYear)
+                    @Html.TextBoxFor(x => x.OrganisationForm.RegistrationYear)
+                </div>
+            </div>
+            <div class="field">
+                @Html.LabelFor(x => x.OrganisationForm.AddressForm.Street)
+                @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.Street)
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.StateId)
+                    @Html.DropDownListFor(x => x.OrganisationForm.AddressForm.StateId, Model.States, "Select...")
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.LGAId)
+                    @Html.DropDownListFor(x => x.OrganisationForm.AddressForm.LGAId, Model.LGAs, "Select...")
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.Email)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.Email)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.PhoneNumber)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.PhoneNumber)
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.PostalCode)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.PostalCode)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(x => x.OrganisationForm.AddressForm.AltPhoneNumber)
+                    @Html.TextBoxFor(x => x.OrganisationForm.AddressForm.AltPhoneNumber)
+                </div>
+            </div>
+            <div class="inline field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="terms">
+                    <label>I agree to the terms and conditions</label>
+                </div>
+            </div>
+            <div class="ui blue submit button">Submit</div>
+            <div class="ui error message"></div>
+        }
+    </div>
+</div>
+<!-- /.Modal forms -->
+@section Styles{
+    @Styles.Render("~/Content/theme/stagb/plugins/lobibox/css/lobibox.css")
+}
+
+@section Scripts{
+
+
+    @Scripts.Render("~/Content/theme/stagb/plugins/lobibox/js/notifications.js")
+    <script>
+        $("#modal-organisation-form")
+            .modal({
+                blurring: false,
+                inverted: false
+            })
+            .modal("attach events", "#modal-organisation", "show");
+
+        $('.ui.form1').form({
+            fields: {
+                name: {
+                    identifier: 'OrganisationForm_Name',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter company name'
+                    }]
+                },
+                registrar: {
+                    identifier: 'OrganisationForm_RegistrarId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a registrar'
+                    }]
+                },
+                TIN: {
+                    identifier: 'OrganisationForm_TIN',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter Tax Identification Number'
+                    }, {
+                        type: 'minLength[11]',
+                        prompt: 'Your TIN must be at least {ruleValue} characters'
+                    }]
+                },
+                RCNumber: {
+                    identifier: 'OrganisationForm_RCNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter a password'
+                    }]
+                },
+                registrationYear: {
+                    identifier: 'OrganisationForm_RegistrationYear',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter a registration year'
+                    }, {
+                        type: 'minLength[4]',
+                        prompt: 'Your registration year must be at least {ruleValue} characters'
+                    }]
+                },
+                street: {
+                    identifier: 'OrganisationForm_AddressForm_Street',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter street details'
+                    }]
+                },
+                state: {
+                    identifier: 'OrganisationForm_AddressForm_StateId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a state'
+                    }]
+                },
+                lga: {
+                    identifier: 'OrganisationForm_AddressForm_LGAId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please select a Local Govt. Area'
+                    }]
+                },
+                phonenumber: {
+                    identifier: 'OrganisationForm_AddressForm_PhoneNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter a valid phone number'
+                    }]
+                },
+                terms: {
+                    identifier: 'terms',
+                    rules: [{
+                        type: 'checked',
+                        prompt: 'You must agree to the terms and conditions'
+                    }]
+                }
+            }
+        });
+
+        $("#OrganisationForm_AddressForm_StateId").change(function (e) {
+            e.preventDefault();
+            // console.log(stateId);
+            // Now execute the command using jQuery ajax.
+            $.ajax({
+                url: '@Url.Action("GetLocalGovernmentAreas")',
+                dataType: 'json',
+                type: 'POST',
+                data: { stateId: $("#OrganisationForm_AddressForm_StateId").val() },
+                beforeSend: function (msg) {
+
+                },
+                success: function (response) {
+                    $("#OrganisationForm_AddressForm_LGAId").html(response.Payload);
+                    Lobibox.notify("success", {
+                        msg: "Local Government Area list updated!",
+                    });
+                },
+                error: function (errmsg) { }
+            });
+        });
+    </script>
+}

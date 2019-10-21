@@ -1,0 +1,129 @@
+﻿@model EBBProc.Areas.Admin.Models.MOrganisationViewModel
+@{
+    ViewBag.Title = "Manage Organisation: " + Model.Row.Name;
+}
+
+@section breadcrumps{
+    <div class="row">
+        <div class="column">
+            <div class="ui breadcrumb">
+                <a class="section" href="/">Home</a>
+                <i class="right angle icon divider"></i>
+                <a class="section" href="@Url.Action("index", "ManageOrganisation", new { area = "Admin"})">Manage Organisations</a>
+                <i class="right angle icon divider"></i>
+                <div class="active section">@Model.Row.Name</div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <form class="ui form" action="/Admin/ManageOrganisation/Status" method="post">
+                    <div class="three fields">
+                        <div class="field">
+                            @Html.DropDownListFor(x => x.StatusForm.Status, Model.OrganisationStatus, null, new { @class = "ui dropdown selection" })
+                        </div>
+                        <div class="field">
+                            @Html.HiddenFor(x => x.StatusForm.Id)
+                            <button class="ui active greenli button" type="submit">
+                                <i class="save icon"></i>
+                                Update status
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="eight wide column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <h3 class="ui header">Corporate Information</h3>
+            </div>
+            <div class="ui segment">
+                <dl>
+                    <dt>Status</dt>
+                    <dd>@Model.Row.OrganisationStatu.Name </dd>
+                    <dt>Company Name</dt>
+                    <dd>@Model.Row.Name</dd>
+                    <dt>Corp. Registrar</dt>
+                    <dd>@Model.Row.CorporateRegistrar.Name </dd>
+                    <dt>RC Number</dt>
+                    <dd>@Model.Row.RCNumber</dd>
+                    <dt>TIN</dt>
+                    <dd>@Model.Row.TIN</dd>
+                    <dt>Registration Year</dt>
+                    <dd>@Model.Row.RegistrationYear</dd>
+                    <dt>Address</dt>
+                    <dd>@Model.Row.Addresses.FirstOrDefault().Street </dd>
+                    <dt>LGA</dt>
+                    <dd>@Model.Row.Addresses.FirstOrDefault().LGA.Name </dd>
+                    <dt>State</dt>
+                    <dd>@Model.Row.Addresses.FirstOrDefault().LGA.State.Name </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="eight wide column">
+        <div class="ui segments">
+            <div class="ui segment no-padding">
+                <div class="ui menu no-radius borderless inverted blueli stackable">
+                    <div class="header item">
+                        Corporate Documents
+                    </div>
+                    <div class="right menu">
+                        <a class="item" id="modal-document-add">
+                            <i class="plus icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
+                <table class="ui table celled">
+                    <thead>
+                        <tr>
+                            <th width="40px">#</th>
+                            <th>Name</th>
+                            <th width="100px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Row.Documents.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var d in Model.Row.Documents.ToList())
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@d.DocumentType.Name</td>
+                                    <td>
+                                        <a href="@Url.Action(" download", new { Id=d.Id})" class="circular ui green icon button">
+                                            <i class="download icon"></i>
+                                        </a>
+                                        <a href="@Url.Action(" removedocument", new { id=d.Id, organisationId=Model.Row.Id })"
+                                           class="circular ui redli icon button">
+                                            <i class="trash icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="99">No document uploaded!</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b1fd4933c01240e39386c2171a08f019" Name="Diagram1">
+        <EntityTypeShape EntityType="ebbpModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="ebbpModel.Address" Width="1.5" PointX="7.5" PointY="2.75" />
+        <EntityTypeShape EntityType="ebbpModel.AddressType" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="ebbpModel.AspNetRole" Width="1.5" PointX="5.25" PointY="13.75" />
+        <EntityTypeShape EntityType="ebbpModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ebbpModel.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="14.125" />
+        <EntityTypeShape EntityType="ebbpModel.AspNetUser" Width="1.5" PointX="7.5" PointY="12.5" />
+        <EntityTypeShape EntityType="ebbpModel.CorporateRegistrar" Width="1.5" PointX="7.5" PointY="7.5" />
+        <EntityTypeShape EntityType="ebbpModel.Document" Width="1.5" PointX="7.5" PointY="18.625" />
+        <EntityTypeShape EntityType="ebbpModel.DocumentCategory" Width="1.5" PointX="3" PointY="20.5" />
+        <EntityTypeShape EntityType="ebbpModel.DocumentFormat" Width="1.5" PointX="3" PointY="17.625" />
+        <EntityTypeShape EntityType="ebbpModel.DocumentType" Width="1.5" PointX="5.25" PointY="18.25" />
+        <EntityTypeShape EntityType="ebbpModel.GlobalSetting" Width="1.5" PointX="2.75" PointY="7.125" />
+        <EntityTypeShape EntityType="ebbpModel.LGA" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="ebbpModel.Organisation" Width="1.5" PointX="9.75" PointY="2.375" />
+        <EntityTypeShape EntityType="ebbpModel.OrganisationStatu" Width="1.5" PointX="7.5" PointY="10.25" />
+        <EntityTypeShape EntityType="ebbpModel.Resource" Width="1.5" PointX="3" PointY="13.125" />
+        <EntityTypeShape EntityType="ebbpModel.State" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="ebbpModel.UserProfile" Width="1.5" PointX="9.75" PointY="10.625" />
+        <EntityTypeShape EntityType="ebbpModel.Zone" Width="1.5" PointX="0.75" PointY="4" />
+        <AssociationConnector Association="ebbpModel.FK_Address_AddressType" />
+        <AssociationConnector Association="ebbpModel.FK_Address_LGA" />
+        <AssociationConnector Association="ebbpModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ebbpModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ebbpModel.FK_UserProfile_UserProfile" />
+        <AssociationConnector Association="ebbpModel.FK_Organisation_CorporateRegistrar" />
+        <AssociationConnector Association="ebbpModel.FK_Document_Document" />
+        <AssociationConnector Association="ebbpModel.FK_DocumentType_DocumentCategory" />
+        <AssociationConnector Association="ebbpModel.FK_DocumentType_DocumentFormat" />
+        <AssociationConnector Association="ebbpModel.FK_Lgas_States" />
+        <AssociationConnector Association="ebbpModel.FK_Organisation_OrganisationStatus" />
+        <AssociationConnector Association="ebbpModel.FK_State_Zone" />
+        <AssociationConnector Association="ebbpModel.AspNetUserRoles" />
+        <AssociationConnector Association="ebbpModel.OrganisationAddress" />
+        <AssociationConnector Association="ebbpModel.OrganisationDocument" />
+        <AssociationConnector Association="ebbpModel.OrganisationUser" />
+        <AssociationConnector Association="ebbpModel.ResourceRole" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

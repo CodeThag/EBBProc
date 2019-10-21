@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link href="~/Content/theme/stagb/dist/semantic.min.css" rel="stylesheet" />
+    <link href="~/Content/theme/stagb/plugins/ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <link href="~/Content/theme/stagb/css/main.css" rel="stylesheet" />
+    <link href="~/Content/theme/stagb/plugins/pacejs/pace.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+
+</head>
+<body>
+    <div id="contextWrap">
+        <!-- Sidebar -->
+        <div class="ui sidebar vertical left menu overlay  borderless visible sidemenu inverted  grey" style="-webkit-transition-duration: 0.1s; transition-duration: 0.1s;" data-color="grey">
+            @Html.Action("Display", "Navigation", new { area = "Admin" })
+        </div>
+        <!-- Sidebar -->
+        <div class="pusher">
+            <!--navbar-->
+            <div class="navslide navwrap">
+                <div class="ui menu icon borderless grid" data-color="inverted white">
+                    <a class="item labeled openbtn">
+                        <i class="ion-navicon-round big icon"></i>
+                    </a>
+                    <a class="item labeled expandit" onclick="toggleFullScreen(document.body)">
+                        <i class="ion-arrow-expand big icon"></i>
+                    </a>
+                    <div class="item ui colhidden">
+                        <div class="ui icon input">
+                            <input type="text" placeholder="Search...">
+                            <i class="search icon"></i>
+                        </div>
+                    </div>
+                    <div class="right menu colhidden">
+
+                        <div class="ui dropdown item labeled icon">
+                            <i class="bell icon"></i>
+                            <div class="ui red label mini circular">6</div>
+                            <div class="menu">
+                                <div class="header">
+                                    People You Might Know
+                                </div>
+                                <div class="item">
+                                    <img class="ui avatar image" src="~/Content/theme/stagb/img/avatar/people/enid.png" alt="label-image" /> Janice Robinson
+                                </div>
+                                <div class="item">
+                                    <img class="ui avatar image" src="~/Content/theme/stagb/img/avatar/people/Hershell.png" alt="label-image" /> Cynthia May
+                                </div>
+                                <div class="item">
+                                    <img class="ui avatar image" src="~/Content/theme/stagb/img/avatar/people/Rick.png" alt="label-image" /> Hugh Carter
+                                </div>
+                                <div class="header">
+                                    Your Friends' Friends
+                                </div>
+                                <div class="item">
+                                    <img class="ui avatar image" src="~/Content/theme/stagb/img/avatar/people/Meggie.png" alt="label-image" /> Pauline Cain
+                                </div>
+                                <div class="item">
+                                    <img class="ui avatar image" src="~/Content/theme/stagb/img/avatar/people/Glenn.png" alt="label-image" /> Marco Beck
+                                </div>
+                                <div class="item">
+                                    <img class="ui avatar image" src="~/Content/theme/stagb/img/avatar/people/Daryl.png" alt="label-image" /> Sue Quinn
+                                </div>
+                            </div>
+                        </div>
+                        @Html.Partial("_StagbLoginPartial")
+                        <a class="item labeled rightsidebar computer only">
+                            <i class="ion-wrench large icon"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <!--navbar-->
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <div class="row">
+                        <div class="column">
+                            <div class="ui segment">
+                                @RenderSection("breadcrumps")
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Messages-->
+                    @if (TempData["message"] != null)
+                    {
+                        var messageType = TempData["messageType"];
+                        var messageIcon = TempData["messageIcon"];
+                        var message = TempData["message"];
+                        <div class="row">
+                            <div class="column">
+                                <div class="ui icon small @messageType message">
+                                    <i class="@messageIcon icon"></i>
+                                    <div class="content">
+                                        <p>@Html.Raw(message)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!-- /. Message-->
+                    <!--Site Content-->
+                    @RenderBody()
+                    <!--Site Content-->
+                </div>
+            </div>
+            <!--maincontent-->
+        </div>
+    </div>
+    <!--jquery-->
+    <script src="~/Content/theme/stagb/js/jquery-2.1.4.min.js"></script>
+    <!--jquery-->
+    <!--semantic-->
+    <script src="~/Content/theme/stagb/dist/semantic.min.js"></script>
+    <!--semantic-->
+    <script src="~/Content/theme/stagb/plugins/cookie/js.cookie.js"></script>
+    <script src="~/Content/theme/stagb/plugins/nicescrool/jquery.nicescroll.min.js"></script>
+    <script data-pace-options='{ "ajax": false }' src="~/Content/theme/stagb/plugins/pacejs/pace.js"></script>
+    <script src="~/Content/theme/stagb/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
